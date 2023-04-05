@@ -1,4 +1,4 @@
-package mysql
+package sqllib
 
 import (
 	"database/sql"
@@ -7,46 +7,30 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-type IWR interface {
-	Init(string, int, int, int, int)
-	GetDB() *sql.DB
-	GetTX() (*sql.Tx, error)
-}
-
-type IR interface {
-	Init(string, int, int, int, int)
-	GetDB() *sql.DB
-}
-
-type IMysql interface {
-	WR() IWR
-	R() IR
-}
-
 type SMysql struct {
-	SWR *SWR
-	SR  *SR
+	SWR *WRmysql
+	SR  *Rmysql
 }
 
 func (this *SMysql) WR() IWR {
 	if this.SWR == nil {
-		this.SWR = &SWR{}
+		this.SWR = &WRmysql{}
 	}
 	return this.SWR
 }
 
 func (this *SMysql) R() IR {
 	if this.SR == nil {
-		this.SR = &SR{}
+		this.SR = &Rmysql{}
 	}
 	return this.SR
 }
 
-type SR struct {
+type Rmysql struct {
 	DB *sql.DB
 }
 
-func (this *SR) Init(parameter string, MaxIdleTimeSecond, MaxLifetimeSecond, MaxIdleConns, MaxOpenConns int) {
+func (this *Rmysql) Init(parameter string, MaxIdleTimeSecond, MaxLifetimeSecond, MaxIdleConns, MaxOpenConns int) {
 	db, err := sql.Open("mysql", parameter)
 	if err != nil {
 		panic(err)
@@ -62,15 +46,15 @@ func (this *SR) Init(parameter string, MaxIdleTimeSecond, MaxLifetimeSecond, Max
 	this.DB = db
 }
 
-func (this *SR) GetDB() *sql.DB {
+func (this *Rmysql) GetDB() *sql.DB {
 	return this.DB
 }
 
-type SWR struct {
+type WRmysql struct {
 	DB *sql.DB
 }
 
-func (this *SWR) Init(parameter string, MaxIdleTimeSecond, MaxLifetimeSecond, MaxIdleConns, MaxOpenConns int) {
+func (this *WRmysql) Init(parameter string, MaxIdleTimeSecond, MaxLifetimeSecond, MaxIdleConns, MaxOpenConns int) {
 	db, err := sql.Open("mysql", parameter)
 	if err != nil {
 		panic(err)
@@ -86,10 +70,10 @@ func (this *SWR) Init(parameter string, MaxIdleTimeSecond, MaxLifetimeSecond, Ma
 	this.DB = db
 }
 
-func (this *SWR) GetDB() *sql.DB {
+func (this *WRmysql) GetDB() *sql.DB {
 	return this.DB
 }
 
-func (this *SWR) GetTX() (*sql.Tx, error) {
+func (this *WRmysql) GetTX() (*sql.Tx, error) {
 	return this.DB.Begin()
 }

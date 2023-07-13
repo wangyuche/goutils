@@ -1,5 +1,7 @@
 package log
 
+import "os"
+
 type ilog interface {
 	New()
 	Info(string)
@@ -51,4 +53,5 @@ func Error(msg string) {
 
 func Fail(msg string) {
 	instace.Fail(msg)
+	os.Exit(0)
 }

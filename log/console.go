@@ -55,5 +55,4 @@ func (this *Console) Fail(msg string) {
 	} else {
 		fmt.Printf("%-9s %s\n", "[Fail]", msg)
 	}
-	os.Exit(0)
 }

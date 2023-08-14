@@ -27,11 +27,9 @@ func New(t LogType) {
 		instace.New()
 		return
 	case console:
+	default:
 		instace = &Console{}
 		instace.New()
-		return
-	default:
-		panic("Log Type Error")
 	}
 }
 

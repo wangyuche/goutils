@@ -21,16 +21,14 @@ const (
 )
 
 func New(t LogType) {
+	instace = &Console{}
 	switch t {
 	case gcp:
 		instace = &GCP{}
-		instace.New()
-		return
 	case console:
-	default:
 		instace = &Console{}
-		instace.New()
 	}
+	instace.New()
 }
 
 func Info(msg string) {

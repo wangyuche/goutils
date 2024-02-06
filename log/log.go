@@ -1,6 +1,9 @@
 package log
 
-import "os"
+import (
+	"os"
+	"runtime"
+)
 
 type ilog interface {
 	New()
@@ -44,10 +47,16 @@ func Warning(msg string) {
 }
 
 func Error(msg string) {
+	stackSlice := make([]byte, 512)
+	s := runtime.Stack(stackSlice, false)
+	instace.Error(string(stackSlice[0:s]))
 	instace.Error(msg)
 }
 
 func Fail(msg string) {
+	stackSlice := make([]byte, 512)
+	s := runtime.Stack(stackSlice, false)
+	instace.Error(string(stackSlice[0:s]))
 	instace.Fail(msg)
 	os.Exit(0)
 }

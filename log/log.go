@@ -47,14 +47,14 @@ func Warning(msg string) {
 }
 
 func Error(msg string) {
-	stackSlice := make([]byte, 512)
+	stackSlice := make([]byte, 2048)
 	s := runtime.Stack(stackSlice, false)
 	instace.Error(string(stackSlice[0:s]))
 	instace.Error(msg)
 }
 
 func Fail(msg string) {
-	stackSlice := make([]byte, 512)
+	stackSlice := make([]byte, 2048)
 	s := runtime.Stack(stackSlice, false)
 	instace.Error(string(stackSlice[0:s]))
 	instace.Fail(msg)

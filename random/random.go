@@ -62,3 +62,16 @@ func RandInt(length int, max int) []int {
 	}
 	return b
 }
+
+func RandByWeight(length int, weight []int) []int {
+	b := make([]int, 0)
+	var sum int = 0
+	for _, v := range weight {
+		sum += v
+	}
+	for i := 0; i < length; i++ {
+		result, _ := c_rand.Int(c_rand.Reader, big.NewInt(int64(sum)))
+		b = append(b, int(result.Uint64()))
+	}
+	return b
+}

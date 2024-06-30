@@ -25,15 +25,15 @@ var instace ISQL
 type SQLType string
 
 const (
-	mysql      SQLType = "mysql"
-	postgresql SQLType = "postgresql"
+	MysqlType      SQLType = "mysql"
+	PostgresqlType SQLType = "postgresql"
 )
 
 func New(t SQLType) ISQL {
 	switch t {
-	case mysql:
+	case MysqlType:
 		instace = &SMysql{}
-	case postgresql:
+	case PostgresqlType:
 		instace = &SPostgresql{}
 	default:
 		panic("Log Type Error")

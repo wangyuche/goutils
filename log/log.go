@@ -19,16 +19,16 @@ var instace ilog
 type LogType string
 
 const (
-	console LogType = "console"
-	gcp     LogType = "gcp"
+	ConsoleType LogType = "console"
+	GcpType     LogType = "gcp"
 )
 
 func New(t LogType) {
 	instace = &Console{}
 	switch t {
-	case gcp:
+	case GcpType:
 		instace = &GCP{}
-	case console:
+	case ConsoleType:
 		instace = &Console{}
 	}
 	instace.New()
